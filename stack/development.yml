@@ -1,0 +1,11 @@
+version: '3'
+services:
+
+    dev:
+        build:
+            context: ../
+            dockerfile: stack/dev/Dockerfile
+        hostname: dev
+        volumes:
+            - ../:/postal
+            - /var/run/docker.sock:/var/run/docker.sock
