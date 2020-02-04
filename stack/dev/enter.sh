@@ -8,14 +8,8 @@ if ! id "$1" > /dev/null 2>&1; then
     adduser $1 sudo
     echo "$1 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-    # setup shell
-    export TERM=xterm-color
-
     # set default workdir
     su $1 -c 'echo "cd /postal" >> ~/.bashrc'
-
-    # disable pycache
-    export PYTHONDONTWRITEBYTECODE=1
 
     # add user to docker group
     usermod -aG docker $1
@@ -24,5 +18,11 @@ if ! id "$1" > /dev/null 2>&1; then
     pip install -e /postal
 fi
 
-# switch users to dev user
+# setup shell
+export TERM=xterm-color
+
+# disable pycache
+export PYTHONDONTWRITEBYTECODE=1
+
+# switch user
 su $1
