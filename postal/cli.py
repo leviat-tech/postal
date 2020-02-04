@@ -15,7 +15,7 @@ def main():
 
     # commands
     commands.register(subparsers, 'launch', commands.launch)
-    commands.register(subparsers, 'enter', commands.compose)
+    commands.register(subparsers, 'enter', commands.enter)
     commands.register(subparsers, 'up', commands.compose, help='[Proxy] Bring docker compose stack up')
     commands.register(subparsers, 'down', commands.compose, help='[Proxy] Bring docker compose stack down')
     commands.register(subparsers, 'logs', commands.compose, help='[Proxy] Show docker logs for service')

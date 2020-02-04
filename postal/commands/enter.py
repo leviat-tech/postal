@@ -1,5 +1,6 @@
-import sys
-from postal import settings
+import os
+import getpass
+from postal.settings import project, compose
 from postal.utils import shell
 
 
@@ -9,8 +10,10 @@ def arguments(parser):
     parser.add_argument('container', type=str, help='container to enter')
 
 def main(args):
-    ctr = args.container
-    bashable = shell(f'docker-compose -p {settings.project} -f {settings.compose} exec {ctr} bash -c ls', silent=True)
+    user = getpass.getuser()
+    uid = os.geteuid()
+    container = args.container
+    bashable = shell(f'docker-compose -p {project} -f {compose} exec {container} bash -c ls', silent=True)
     if bashable:
-        return shell(f'docker-compose -p {settings.project} -f {settings.compose} exec {ctr} bash /enter.sh $USER $UID')
-    return shell(f'docker-compose -p {settings.project} -f {settings.compose} exec {ctr} sh')
+        return shell(f'docker-compose -p {project} -f {compose} exec {container} bash /enter.sh {user} {uid}')
+    return shell(f'docker-compose -p {project} -f {compose} exec {container} sh')
