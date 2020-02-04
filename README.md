@@ -9,3 +9,9 @@ Postal requires that you have python >= 3.6, docker, and docker-compose installe
 
 To install:  
 `pip install docker-postal`
+
+For the console script to be installed you may need to install with:  
+`pip install --user docker-postal`
+
+Or unfortunately if (~/.local/bin) is not on your system path:  
+`sudo pip install docker-postal`  
