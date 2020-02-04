@@ -13,6 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/obe-de/postal",
+    download_url="https://github.com/obe-de/postal/archive/v0.0.1.tar.gz",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
