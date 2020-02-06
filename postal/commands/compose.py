@@ -8,5 +8,5 @@ help = "Proxy a docker compose command"
 def arguments(parser):
     pass
 
-def main(args):
+def main(args=None):
     sys.exit(shell(f'docker-compose -p {settings.project} -f {settings.compose} {" ".join(sys.argv[1:])}'))
