@@ -3,17 +3,19 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+version = "0.0.3"
+
 setuptools.setup(
     # info
     name="docker-postal",
-    version="0.0.2",
+    version=version,
     author="Stephen",
     author_email="squebe@crh.io",
     description="A light Docker control tool designed around compose and swarm",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/obe-de/postal",
-    download_url="https://github.com/obe-de/postal/archive/v0.0.2.tar.gz",
+    download_url="https://github.com/obe-de/postal/archive/v" + version + ".tar.gz",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
