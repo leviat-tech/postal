@@ -1,6 +1,8 @@
 from . import launch
 from . import enter
 from . import compose
+from . import config
+from . import deploy
 
 
 def register(subparsers, name, command, help=None):

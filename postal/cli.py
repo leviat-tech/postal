@@ -11,13 +11,28 @@ def main():
     parser = ArgumentParser(description=description)
     subparsers = parser.add_subparsers(help=help)
 
-    # commands
+    # development commands
     commands.register(subparsers, 'launch', commands.launch)
     commands.register(subparsers, 'enter', commands.enter)
+
+    # swarm commands
+    commands.register(subparsers, 'config', commands.config)
+    commands.register(subparsers, 'deploy', commands.deploy)
+
+    # proxied compose commands
     commands.register(subparsers, 'up', commands.compose, help='[Proxy] Bring docker compose stack up')
     commands.register(subparsers, 'down', commands.compose, help='[Proxy] Bring docker compose stack down')
     commands.register(subparsers, 'logs', commands.compose, help='[Proxy] Show docker logs for service')
     commands.register(subparsers, 'help', commands.compose, help='[Proxy] Show docker compose help')
+
+    # commands.register(subparsers, 'remote', commands.deploy) # run remote commands on swarm? enter remote container?
+    # commands.register(subparsers, 'track', commands.deploy) # remote stack logs?
+
+    # management commands
+    # commands.register(subparsers, 'serve', commands.serve)
+    #commands.register(subparsers, 'login', commands.login)
+
+
 
     # proxy
     if proxy(parser): sys.exit(commands.compose.main())
