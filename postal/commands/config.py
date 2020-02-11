@@ -5,9 +5,9 @@ from postal.utils import shell
 
 help = "Manage stack's config via injected production.env file"
 
-def arguments(parser):
-    parser.set_defaults(cmd=lambda _: parser.print_help())
-    subparsers = parser.add_subparsers(help='')
+def arguments(root_parser):
+    root_parser.set_defaults(cmd=lambda _: root_parser.print_help())
+    subparsers = root_parser.add_subparsers(help='')
 
     # ls
     parser = subparsers.add_parser('ls', help='')
