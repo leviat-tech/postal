@@ -1,4 +1,3 @@
-from postal.settings import config
 from postal.utils import shell
 
 
@@ -8,6 +7,6 @@ def arguments(parser):
     pass
 
 def main(args):
-    shell(f'docker-compose -p {config["stack"]} -f {config["compose"]} down --remove-orphans')
-    shell(f'docker-compose -p {config["stack"]} -f {config["compose"]} build')
-    shell(f'docker-compose -p {config["stack"]} -f {config["compose"]} up -d --force-recreate')
+    shell(f'docker-compose -p {args.stack} -f {args.compose} down --remove-orphans')
+    shell(f'docker-compose -p {args.stack} -f {args.compose} build')
+    shell(f'docker-compose -p {args.stack} -f {args.compose} up -d --force-recreate')

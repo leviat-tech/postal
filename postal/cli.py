@@ -1,47 +1,53 @@
 import sys
 from argparse import ArgumentParser
 from . import commands
-from .utils import proxy
-from .settings import config
+from . import utils
 
 
 def main():
 
-    # arguments
-    help = """*All unmatched commands are proxied to docker compose with configured compose file selected*"""
+    # parser
+    help = ""
     description = 'A light Docker control tool designed around compose and swarm'
     parser = ArgumentParser(description=description)
-    parser.add_argument('-s', '--stack', type=str, help='specify the stack name (defaults to current folder)')
     subparsers = parser.add_subparsers(help=help)
+
+    # arguments
+    pwd = utils.sanitized_working_directory()
+    cmp = 'stack/development.yml' # on deploy commands overridden by production.yml
+    parser.add_argument('-s', '--stack', type=str, default=pwd,
+        help=f'stack name (pwd: {pwd})')
+    parser.add_argument('-c', '--compose', type=str, default=cmp,
+        help=f'compose file (stack/[development|production].yml)')
 
     # development commands
     commands.register(subparsers, 'launch', commands.launch)
     commands.register(subparsers, 'enter', commands.enter)
+    commands.register(subparsers, 'up', commands.compose, help='Bring docker compose stack up')
+    commands.register(subparsers, 'down', commands.compose, help='Bring docker compose stack down')
+    commands.register(subparsers, 'logs', commands.compose, help='Show docker logs for compose stack')
+    commands.register(subparsers, 'compose', commands.compose)
 
     # swarm commands
     commands.register(subparsers, 'config', commands.config)
     commands.register(subparsers, 'deploy', commands.deploy)
-
-    # proxied compose commands
-    commands.register(subparsers, 'up', commands.compose, help='[Proxy] Bring docker compose stack up')
-    commands.register(subparsers, 'down', commands.compose, help='[Proxy] Bring docker compose stack down')
-    commands.register(subparsers, 'logs', commands.compose, help='[Proxy] Show docker logs for service')
-    commands.register(subparsers, 'help', commands.compose, help='[Proxy] Show docker compose help')
-
-    # commands.register(subparsers, 'remote', commands.deploy) # run remote commands on swarm? enter remote container?
-    # commands.register(subparsers, 'track', commands.deploy) # remote stack logs?
+    # commands.register(subparsers, 'remote', commands.remote)
+    # commands.register(subparsers, 'swarm', commands.remote)
 
     # management commands
+    # commands.register(subparsers, 'login', commands.login)
     # commands.register(subparsers, 'serve', commands.serve)
-    #commands.register(subparsers, 'login', commands.login)
 
-
-
-    # proxy
-    if proxy(parser): sys.exit(commands.compose.main())
+    # special fixes for compose and deploy proxy commands
+    arguments = sys.argv[1:]
+    remainder = arguments
+    if len(arguments) > 0 and (arguments[0] == 'compose' or arguments[0] == 'deploy'):
+        remainder = arguments[1:]    # everything after compose or deploy store in proxied
+        arguments = arguments[:1]  # everything before store in arguments
 
     # parse args
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
+    args.remainder = remainder
 
     # execute command
     if hasattr(args, 'cmd'):

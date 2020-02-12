@@ -1,12 +1,12 @@
 import sys
-from postal.settings import config
+import argparse
 from postal.utils import shell
 
 
-help = "Proxy a docker compose command"
+help = "Proxy a docker compose command with configured compose file selected"
 
 def arguments(parser):
     pass
 
 def main(args=None):
-    sys.exit(shell(f'docker-compose -p {config["stack"]} -f {config["compose"]} {" ".join(sys.argv[1:])}'))
+    sys.exit(shell(f'docker-compose -p {args.stack} -f {args.compose} {" ".join(args.remainder)}'))

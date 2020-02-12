@@ -1,7 +1,6 @@
 import os
-import sys
+import re
 from subprocess import call
-from argparse import _SubParsersAction
 
 
 # call a shell command in subprocess
@@ -12,12 +11,5 @@ def shell(command, silent=False):
     else:
         return call(command, shell=True) == 0
 
-# return true if no subparsers match but there is a positional argument
-def proxy(parser):
-    if not parser._subparsers or not parser._subparsers._actions: return True
-    subparsers = next(i for i in parser._subparsers._actions if isinstance(i, _SubParsersAction))
-    choices = list(subparsers.choices.keys())
-    return len(sys.argv) > 1 and sys.argv and \
-        sys.argv[1] not in choices and \
-        sys.argv[1] not in ['-h', '--help'] and \
-        sys.argv[1] not in ['-s', '--stack']
+def sanitized_working_directory():
+    return re.sub('[^0-9a-zA-Z]+', '-', os.path.basename(os.getcwd())).strip('-')
