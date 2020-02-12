@@ -8,15 +8,12 @@ if ! id "$1" > /dev/null 2>&1; then
     adduser $1 sudo
     echo "$1 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-    # setup shell
-    export TERM=xterm-color
-
-    # set default workdir
-    su $1 -c 'echo "cd /postal" >> ~/.bashrc'
-
     # add user to docker group
     usermod -aG docker $1
 fi
+
+# setup shell
+export TERM=xterm-color
 
 # switch users to dev user
 su $1
