@@ -7,9 +7,6 @@ if ! id "$1" > /dev/null 2>&1; then
     useradd -s /bin/bash -u $2 $1 -m
     adduser $1 sudo
     echo "$1 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-    # add user to docker group
-    usermod -aG docker $1
 fi
 
 # setup shell
