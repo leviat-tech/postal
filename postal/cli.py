@@ -50,7 +50,11 @@ def main():
     args.remainder = remainder
 
     # execute command
-    if hasattr(args, 'cmd'):
-        sys.exit(args.cmd(args))
-    else:
-        parser.print_help()
+    try:
+        if hasattr(args, 'cmd'):
+            sys.exit(args.cmd(args))
+        else:
+            parser.print_help()
+    except KeyboardInterrupt:
+        print('')
+        sys.exit()
