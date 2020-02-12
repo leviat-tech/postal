@@ -14,14 +14,8 @@ if ! id "$1" > /dev/null 2>&1; then
     # set default workdir
     su $1 -c 'echo "cd /postal" >> ~/.bashrc'
 
-    # disable pycache
-    export PYTHONDONTWRITEBYTECODE=1
-
     # add user to docker group
     usermod -aG docker $1
-
-    # install in editable mode
-    pip install -e /postal
 fi
 
 # switch users to dev user
