@@ -1,6 +1,6 @@
 import os
 import getpass
-from postal.settings import project, compose
+from postal.settings import config
 from postal.utils import shell
 
 
@@ -13,7 +13,9 @@ def main(args):
     user = getpass.getuser()
     uid = os.geteuid()
     container = args.container
-    bashable = shell(f'docker-compose -p {project} -f {compose} exec {container} bash -c ls', silent=True)
+    stack = config["stack"]
+    compose = config["compose"]
+    bashable = shell(f'docker-compose -p {stack} -f {compose} exec {container} bash -c ls', silent=True)
     if bashable:
-        return shell(f'docker-compose -p {project} -f {compose} exec {container} bash /enter.sh {user} {uid}')
-    return shell(f'docker-compose -p {project} -f {compose} exec {container} sh')
+        return shell(f'docker-compose -p {stack} -f {compose} exec {container} bash /enter.sh {user} {uid}')
+    return shell(f'docker-compose -p {stack} -f {compose} exec {container} sh')

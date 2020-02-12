@@ -1,8 +1,3 @@
-import sys
-from postal import settings
-from postal.utils import shell
-
-
 help = "Manage stack's config via injected production.env file"
 
 def arguments(root_parser):
@@ -29,6 +24,10 @@ def arguments(root_parser):
     parser.add_argument('name', type=str, help='')
     parser.set_defaults(cmd=rm)
 
+    # import
+    parser = subparsers.add_parser('import', help='')
+    parser.set_defaults(cmd=imprt)
+
     # export
     parser = subparsers.add_parser('export', help='')
     parser.set_defaults(cmd=export)
@@ -47,6 +46,9 @@ def get(args):
 
 def rm(args):
     print('rm')
+
+def imprt(args):
+    print('import')
 
 def export(args):
     print('export')

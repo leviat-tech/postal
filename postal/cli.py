@@ -2,6 +2,8 @@ import sys
 from argparse import ArgumentParser
 from . import commands
 from .utils import proxy
+from .settings import config
+
 
 def main():
 
@@ -9,6 +11,7 @@ def main():
     help = """*All unmatched commands are proxied to docker compose with configured compose file selected*"""
     description = 'A light Docker control tool designed around compose and swarm'
     parser = ArgumentParser(description=description)
+    parser.add_argument('-s', '--stack', type=str, help='specify the stack name (defaults to current folder)')
     subparsers = parser.add_subparsers(help=help)
 
     # development commands

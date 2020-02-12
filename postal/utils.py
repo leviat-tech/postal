@@ -17,6 +17,7 @@ def proxy(parser):
     if not parser._subparsers or not parser._subparsers._actions: return True
     subparsers = next(i for i in parser._subparsers._actions if isinstance(i, _SubParsersAction))
     choices = list(subparsers.choices.keys())
-    if len(sys.argv) > 1 and sys.argv and sys.argv[1] not in choices and sys.argv[1] not in ['-h', '--help']:
-        print(sys.argv[1])
-        return True
+    return len(sys.argv) > 1 and sys.argv and \
+        sys.argv[1] not in choices and \
+        sys.argv[1] not in ['-h', '--help'] and \
+        sys.argv[1] not in ['-s', '--stack']

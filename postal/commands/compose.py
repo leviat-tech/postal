@@ -1,5 +1,5 @@
 import sys
-from postal import settings
+from postal.settings import config
 from postal.utils import shell
 
 
@@ -9,4 +9,4 @@ def arguments(parser):
     pass
 
 def main(args=None):
-    sys.exit(shell(f'docker-compose -p {settings.project} -f {settings.compose} {" ".join(sys.argv[1:])}'))
+    sys.exit(shell(f'docker-compose -p {config["stack"]} -f {config["compose"]} {" ".join(sys.argv[1:])}'))
