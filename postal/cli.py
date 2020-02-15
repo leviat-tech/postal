@@ -35,8 +35,8 @@ def main():
     # commands.register(subparsers, 'swarm', commands.remote)
 
     # management commands
-    # commands.register(subparsers, 'login', commands.login)
-    # commands.register(subparsers, 'serve', commands.serve)
+    commands.register(subparsers, 'login', commands.login)
+    commands.register(subparsers, 'serve', commands.serve)
 
     # special fixes for compose and deploy proxy commands
     arguments = sys.argv[1:]

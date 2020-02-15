@@ -3,6 +3,8 @@ from . import enter
 from . import compose
 from . import config
 from . import deploy
+from . import login
+from . import serve
 
 
 def register(subparsers, name, command, help=None):
