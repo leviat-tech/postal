@@ -1,6 +1,6 @@
 import sys
 import argparse
-from postal.utils import shell
+from postal.core.utils import shell
 
 
 help = "Proxy a docker compose command with configured compose file selected"

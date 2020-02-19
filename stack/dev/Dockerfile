@@ -35,6 +35,11 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-c
     -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
 
+# install open ssh server
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
 # tell python not to write bytecode and simlink python3 to python
 ENV PYTHONDONTWRITEBYTECODE 1
 RUN ln -s /usr/bin/python3 /usr/bin/python
@@ -43,4 +48,5 @@ RUN ln -s /usr/bin/pip3 /usr/bin/pip
 # copy enter script and run
 COPY stack/dev/enter.sh /enter.sh
 WORKDIR /postal
-CMD tail -f /dev/null
+#CMD tail -f /dev/null
+CMD ["/usr/sbin/sshd", "-D"]

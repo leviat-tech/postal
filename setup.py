@@ -26,7 +26,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     entry_points={'console_scripts': ['postal = postal.cli:main']},
     python_requires='>=3.6',
-    install_requires=['keyrings.alt==3.1.1', 'appdirs', 'websockets'],
+    install_requires=['appdirs'],
 
     # test
     setup_requires=['pytest-runner'],

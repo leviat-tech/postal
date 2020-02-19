@@ -1,6 +1,6 @@
 import os
 import getpass
-from postal.utils import shell
+from postal.core.utils import shell
 
 
 help = "Enter a container (using enter script if availiable./)"

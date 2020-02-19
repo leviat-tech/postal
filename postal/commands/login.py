@@ -1,5 +1,6 @@
-from postal.core import config
-from postal.core.client import Client
+import getpass
+from postal.core import settings
+from postal.core.rpc import Proxy
 
 
 help = 'Login to the postal build and management server'
@@ -11,15 +12,18 @@ def arguments(parser):
 
 def main(args=None):
     # get input
-    host = input('Enter postal build server host: ')
-    port = 8000
-    user = input('Enter postal build server username: ')
-    password = input('Enter postal build server password: ')
+    user = getpass.getuser()
+    host = 'localhost'
+    port = '22'
+    user = input(f'Enter postal build server user (default {user}): ').strip() or user
+    host = input(f'Enter postal build server host (default {host}): ').strip() or host
+    port = input(f'Enter postal build server port (default {port}): ').strip() or port
 
     # test connection
-    proxy = Client(host, port)
+    print(f'Connnecting to {user}@{host}:{port}')
+    proxy = Proxy(user, host, port)
     try:
-        if proxy.ping():
+        if proxy.ping() == 'ok':
             print('Successfully connected to build server.')
         else:
             print('Failed to authenticate with build server.')
@@ -30,6 +34,5 @@ def main(args=None):
         return
 
     # store config
-    config.set(host=host, port=8000, user=user)
-    config.set_password(user, password)
+    config.set(user=user, host=host, port=port)
     print("Config saved.")

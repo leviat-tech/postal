@@ -1,6 +1,5 @@
 import os
 import json
-import keyring
 from pathlib import Path
 from appdirs import user_config_dir
 
@@ -20,9 +19,3 @@ def get():
             return json.load(f)
     except FileNotFoundError:
         return {}
-
-def set_password(username, password):
-    keyring.set_password('postal', username, password)
-
-def get_password(username):
-    return keyring.get_password('postal', username)

@@ -1,7 +1,7 @@
 import sys
 from argparse import ArgumentParser
 from . import commands
-from . import utils
+from .core import utils
 
 
 def main():
@@ -29,14 +29,14 @@ def main():
     commands.register(subparsers, 'compose', commands.compose)
 
     # swarm commands
-    commands.register(subparsers, 'config', commands.secrets)
+    commands.register(subparsers, 'config', commands.config)
     commands.register(subparsers, 'deploy', commands.deploy)
     # commands.register(subparsers, 'remote', commands.remote)
     # commands.register(subparsers, 'swarm', commands.remote)
 
     # management commands
     commands.register(subparsers, 'login', commands.login)
-    commands.register(subparsers, 'serve', commands.serve)
+    commands.register(subparsers, 'call', commands.call)
 
     # special fixes for compose and deploy proxy commands
     arguments = sys.argv[1:]

@@ -1,13 +1,15 @@
 import os
 import re
-from subprocess import call
+from subprocess import call, check_output
 
 
 # call a shell command in subprocess
-def shell(command, silent=False):
+def shell(command, silent=False, capture=False):
     if silent:
         with open(os.devnull, 'w') as DEVNULL:
             return call(command, shell=True, stdout=DEVNULL, stderr=DEVNULL) == 0
+    if capture:
+        return check_output(command, shell=True)
     else:
         return call(command, shell=True) == 0
 

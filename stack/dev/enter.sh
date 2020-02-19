@@ -16,6 +16,11 @@ if ! id "$1" > /dev/null 2>&1; then
 
     # install in editable mode
     pip install -e /postal
+
+    # generate and authorize keys
+    su $1 -c "ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa"
+    su $1 -c "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys"
+    su $1 -c "chmod 600 ~/.ssh/authorized_keys"
 fi
 
 # setup shell

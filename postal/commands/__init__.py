@@ -1,10 +1,10 @@
 from . import launch
 from . import enter
 from . import compose
-from . import secrets
+from . import config
 from . import deploy
 from . import login
-from . import serve
+from . import call
 
 
 def register(subparsers, name, command, help=None):

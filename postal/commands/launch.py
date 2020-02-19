@@ -1,4 +1,4 @@
-from postal.utils import shell
+from postal.core.utils import shell
 
 
 help = "Rebuild and restart stack"
