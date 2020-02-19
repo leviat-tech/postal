@@ -36,7 +36,9 @@ def main(args=None):
     pass
 
 def ls(args):
-    print('ls')
+    proxy = Client(args.address, args.port)
+    print(proxy.is_even(1))
+    print(proxy.is_even(2))
 
 def set(args):
     print('set')

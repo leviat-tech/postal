@@ -9,8 +9,8 @@ async def count(value, update=None):
         await update(v)
     return value
 
-def is_even(value):
-    return bool(value % 2)
+def ping():
+    return True
 
 def arguments(parser):
     parser.add_argument('-a', '--address', type=str, default='localhost', help='address to listen on')
@@ -18,5 +18,5 @@ def arguments(parser):
 
 def main(args=None):
     server = Server(args.address, args.port)
-    server.register(is_even, 'is_even')
+    server.register(ping, 'ping')
     server.serve()

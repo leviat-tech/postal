@@ -29,7 +29,7 @@ def main():
     commands.register(subparsers, 'compose', commands.compose)
 
     # swarm commands
-    commands.register(subparsers, 'config', commands.config)
+    commands.register(subparsers, 'config', commands.secrets)
     commands.register(subparsers, 'deploy', commands.deploy)
     # commands.register(subparsers, 'remote', commands.remote)
     # commands.register(subparsers, 'swarm', commands.remote)
