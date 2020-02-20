@@ -11,6 +11,12 @@ if ! id "$1" > /dev/null 2>&1; then
     # set default workdir
     su $1 -c 'echo "cd /postal" >> ~/.bashrc'
 
+    # set env vars so remote ssh calls will work
+    echo POSTAL_AWS_BUCKET=$POSTAL_AWS_BUCKET >> /etc/environment
+    echo POSTAL_AWS_REGION=$POSTAL_AWS_REGION >> /etc/environment
+    echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID >> /etc/environment
+    echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> /etc/environment
+
     # add user to docker group
     usermod -aG docker $1
 

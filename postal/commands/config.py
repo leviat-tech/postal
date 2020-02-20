@@ -1,3 +1,5 @@
+from postal.core.rpc import Proxy
+
 help = "Manage stack's config via injected production.env file"
 
 def arguments(root_parser):
@@ -6,51 +8,31 @@ def arguments(root_parser):
 
     # ls
     parser = subparsers.add_parser('ls', help='')
-    parser.set_defaults(cmd=ls)
+    parser.set_defaults(cmd=lambda args: Proxy().config_ls(args.stack))
 
     # set
     parser = subparsers.add_parser('set', help='')
     parser.add_argument('name', type=str, help='')
     parser.add_argument('value', type=str, help='')
-    parser.set_defaults(cmd=set)
+    parser.set_defaults(cmd=lambda args: Proxy().config_set(args.stack, args.name, args.value))
 
     # get
     parser = subparsers.add_parser('get', help='')
     parser.add_argument('name', type=str, help='')
-    parser.set_defaults(cmd=get)
+    parser.set_defaults(cmd=lambda args: Proxy().config_get(args.stack, args.name))
 
     # unset
     parser = subparsers.add_parser('rm', help='')
     parser.add_argument('name', type=str, help='')
-    parser.set_defaults(cmd=rm)
+    parser.set_defaults(cmd=lambda args: Proxy().config_rm(args.stack, args.name))
 
     # import
     parser = subparsers.add_parser('import', help='')
-    parser.set_defaults(cmd=imprt)
+    parser.set_defaults(cmd=lambda args: Proxy().config_load(args.stack))
 
     # export
     parser = subparsers.add_parser('export', help='')
-    parser.set_defaults(cmd=export)
+    parser.set_defaults(cmd=lambda args: Proxy().config_unload(args.stack))
 
 def main(args=None):
     pass
-
-def ls(args):
-    proxy = Client(args.address, args.port)
-    print(proxy.is_even(1))
-    print(proxy.is_even(2))
-
-def set(args):
-    print('set')
-
-def get(args):
-    print('get')
-
-def rm(args):
-    print('rm')
-
-def imprt(args):
-    print('import')
-
-def export(args):
-    print('export')

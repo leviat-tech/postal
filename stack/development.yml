@@ -6,6 +6,7 @@ services:
       context: ../
       dockerfile: stack/dev/Dockerfile
     hostname: dev
+    env_file: development.env
     volumes:
       - ../:/postal
       - /var/run/docker.sock:/var/run/docker.sock

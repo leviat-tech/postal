@@ -34,5 +34,5 @@ def main(args=None):
         return
 
     # store config
-    config.set(user=user, host=host, port=port)
+    settings.set(user=user, host=host, port=port)
     print("Config saved.")

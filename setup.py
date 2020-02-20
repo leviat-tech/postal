@@ -26,7 +26,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     entry_points={'console_scripts': ['postal = postal.cli:main']},
     python_requires='>=3.6',
-    install_requires=['appdirs'],
+    install_requires=['boto', 'appdirs'],
 
     # test
     setup_requires=['pytest-runner'],

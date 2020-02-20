@@ -1,11 +1,20 @@
+import sys
 import json
 import uuid
+from . import settings
 from .utils import shell
+from . import config
 
 
 # functions registered for rpc
 registered = {
-    'ping': lambda: 'ok'
+    'ping': lambda: 'ok',
+    'config_ls': config.ls,
+    'config_set': config.set,
+    'config_get': config.get,
+    'config_rm': config.rm,
+    'config_load': config.load,
+    'config_unload': config.unload
 }
 
 # execute rpc locally (we use temporary files to allow stdin stdout and return values)
@@ -18,10 +27,14 @@ def call(cid):
 # rpc proxy
 class Proxy:
 
-    def __init__(self, user, host, port):
-        self.user = user
-        self.host = host
-        self.port = port
+    def __init__(self, user=None, host=None, port=None):
+        s = settings.get()
+        if not user and not s.get('user'):
+            print('Not logged into remote server, unable to make remote calls. Please login.')
+            sys.exit(1)
+        self.user = user or s.get('user')
+        self.host = host or s.get('host')
+        self.port = port  or s.get('port')
 
     # call the remote function (use temporary files for input and output so we can still connect stdin and stdout)
     def rpc(self, request):
