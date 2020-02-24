@@ -1,5 +1,4 @@
 import sys
-import argparse
 from postal.core.utils import shell
 
 

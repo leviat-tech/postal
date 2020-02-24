@@ -31,8 +31,8 @@ def main():
     # swarm commands
     commands.register(subparsers, 'config', commands.config)
     commands.register(subparsers, 'deploy', commands.deploy)
+    commands.register(subparsers, 'manager', commands.manager)
     # commands.register(subparsers, 'remote', commands.remote)
-    # commands.register(subparsers, 'swarm', commands.remote)
 
     # management commands
     commands.register(subparsers, 'login', commands.login)
@@ -41,9 +41,9 @@ def main():
     # special fixes for compose and deploy proxy commands
     arguments = sys.argv[1:]
     remainder = arguments
-    if len(arguments) > 0 and (arguments[0] == 'compose' or arguments[0] == 'deploy'):
-        remainder = arguments[1:]    # everything after compose or deploy store in proxied
-        arguments = arguments[:1]  # everything before store in arguments
+    if len(arguments) > 0 and (arguments[0] == 'compose' or arguments[0] == 'deploy' or arguments[0] == 'manager'):
+        remainder = arguments[1:]   # everything after compose or deploy store in proxied
+        arguments = arguments[:1]   # everything before store in arguments
 
     # parse args
     args = parser.parse_args(arguments)

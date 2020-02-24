@@ -4,6 +4,7 @@ import uuid
 from . import settings
 from .utils import shell
 from . import config
+from . import manager
 
 
 # functions registered for rpc
@@ -14,7 +15,8 @@ registered = {
     'config_get': config.get,
     'config_rm': config.rm,
     'config_load': config.load,
-    'config_unload': config.unload
+    'config_unload': config.unload,
+    'manager': manager.proxy,
 }
 
 # execute rpc locally (we use temporary files to allow stdin stdout and return values)

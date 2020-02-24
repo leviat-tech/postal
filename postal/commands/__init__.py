@@ -5,6 +5,7 @@ from . import config
 from . import deploy
 from . import login
 from . import call
+from . import manager
 
 
 def register(subparsers, name, command, help=None):
