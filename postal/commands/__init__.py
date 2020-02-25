@@ -5,7 +5,7 @@ from . import config
 from . import deploy
 from . import login
 from . import call
-from . import manager
+from . import swarm
 
 
 def register(subparsers, name, command, help=None):

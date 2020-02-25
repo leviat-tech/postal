@@ -4,7 +4,7 @@ import uuid
 from . import settings
 from .utils import shell
 from . import config
-from . import manager
+from . import swarm
 
 
 # functions registered for rpc
@@ -16,8 +16,8 @@ registered = {
     'config_rm': config.rm,
     'config_load': config.load,
     'config_unload': config.unload,
-    'manager_proxy': manager.proxy,
-    'manager_deploy': manager.deploy,
+    'swarm_proxy': swarm.proxy,
+    'swarm_deploy': swarm.deploy,
 }
 
 # execute rpc locally (we use temporary files to allow stdin stdout and return values)

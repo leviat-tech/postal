@@ -7,4 +7,4 @@ def arguments(parser):
     pass
 
 def main(args=None):
-    Proxy().manager_proxy(args.remainder)
+    Proxy().swarm_proxy(args.remainder)
