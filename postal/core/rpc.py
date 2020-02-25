@@ -10,7 +10,7 @@ from . import swarm
 # functions registered for rpc
 registered = {
     'ping': lambda: 'ok',
-    'config_ls': config.ls,
+    'config_dict': config.dict,
     'config_set': config.set,
     'config_get': config.get,
     'config_rm': config.rm,

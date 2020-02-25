@@ -1,6 +1,12 @@
 from postal.core.rpc import Proxy
 
+
 help = "Manage stack's config via injected production.env file"
+
+def ls(args):
+    vars = Proxy().config_dict(args.stack)
+    for key in vars:
+        print(f'{key}={vars[key]}')
 
 def arguments(root_parser):
     root_parser.set_defaults(cmd=lambda _: root_parser.print_help())
@@ -8,7 +14,7 @@ def arguments(root_parser):
 
     # ls
     parser = subparsers.add_parser('ls', help='')
-    parser.set_defaults(cmd=lambda args: Proxy().config_ls(args.stack))
+    parser.set_defaults(cmd=ls)
 
     # set
     parser = subparsers.add_parser('set', help='')

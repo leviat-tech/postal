@@ -3,25 +3,28 @@ import json
 from postal.core import db
 
 
-def ls(stack):
-    vars = db.get(stack)
-    for key in vars:
-        print(f'{key}={vars[key]}')
+# get entire config as directory
+def dict(stack):
+    return db.get(stack)
 
+# set value
 def set(stack, name, value):
     vars = db.get(stack)
     vars[name] = value
     db.set(stack, vars)
 
+# get value
 def get(stack, name):
     vars = db.get(stack)
     return vars.get(name)
 
+# remove key
 def rm(stack, name):
     vars = db.get(stack)
     vars.pop(name)
     db.set(stack, vars)
 
+# load from stdin
 def load(stack):
     vars = json.loads(sys.stdin.read())
     try:
@@ -31,6 +34,7 @@ def load(stack):
         print('Invalid format: config should be a json file with keys and values of type string.')
     db.set(stack, vars)
 
+# unload to stdout
 def unload(stack):
     vars = db.get(stack)
-    print(json.dumps(vars, indent=2))
+    return print(json.dumps(vars, indent=2))
