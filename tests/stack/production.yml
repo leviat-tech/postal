@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  dev:
+    build:
+      context: ../
+      dockerfile: stack/dev/Dockerfile
+    image: crhio/test
+    hostname: dev

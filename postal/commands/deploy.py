@@ -1,3 +1,7 @@
+import os
+from postal.core.rpc import Proxy
+
+
 help = "Deploy stack from origin repository or working dir"
 
 def arguments(parser):
@@ -5,4 +9,9 @@ def arguments(parser):
     parser.add_argument('-w', '--working', action='store_true', help='deploy working directory')
 
 def main(args=None):
-    print('config', args)
+    proxy = Proxy()
+    if args.working:
+        destination = proxy.send(os.getcwd())
+        proxy.manager_deploy(stack=args.stack, dir=destination)
+    # else:
+    #     proxy.manager_deploy(destination)

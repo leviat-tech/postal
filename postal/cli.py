@@ -41,7 +41,7 @@ def main():
     # special fixes for compose and deploy proxy commands
     arguments = sys.argv[1:]
     remainder = arguments
-    if len(arguments) > 0 and (arguments[0] == 'compose' or arguments[0] == 'deploy' or arguments[0] == 'manager'):
+    if len(arguments) > 0 and (arguments[0] == 'compose' or arguments[0] == 'manager'):
         remainder = arguments[1:]   # everything after compose or deploy store in proxied
         arguments = arguments[:1]   # everything before store in arguments
 

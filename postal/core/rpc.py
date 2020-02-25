@@ -16,7 +16,8 @@ registered = {
     'config_rm': config.rm,
     'config_load': config.load,
     'config_unload': config.unload,
-    'manager': manager.proxy,
+    'manager_proxy': manager.proxy,
+    'manager_deploy': manager.deploy,
 }
 
 # execute rpc locally (we use temporary files to allow stdin stdout and return values)
@@ -37,6 +38,17 @@ class Proxy:
         self.user = user or s.get('user')
         self.host = host or s.get('host')
         self.port = port  or s.get('port')
+
+    # send stack to remote
+    def send(self, source):
+        destination = f'/tmp/postal_stack_{uuid.uuid1()}'
+        print('Uploading stack...', end=' ')
+        if shell(f"scp -q -P {self.port} -r {source} {self.user}@{self.host}:{destination}"):
+            print('Done.')
+        else:
+            print('Failed')
+            sys.exit(1)
+        return destination
 
     # call the remote function (use temporary files for input and output so we can still connect stdin and stdout)
     def rpc(self, request):
