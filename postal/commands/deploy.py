@@ -12,6 +12,6 @@ def main(args=None):
     proxy = Proxy()
     if args.working:
         destination = proxy.send(os.getcwd())
-        proxy.manager_deploy(stack=args.stack, dir=destination)
+        proxy.swarm_deploy(stack=args.stack, dir=destination)
     # else:
-    #     proxy.manager_deploy(destination)
+    #     proxy.swarm_deploy(destination)
