@@ -6,4 +6,5 @@ services:
       context: ../
       dockerfile: stack/dev/Dockerfile
     image: crhio/test
+    env_file: production.env
     hostname: dev
