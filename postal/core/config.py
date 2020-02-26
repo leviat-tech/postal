@@ -4,7 +4,7 @@ from postal.core import db
 
 
 # get entire config as directory
-def dict(stack):
+def all(stack):
     return db.get(stack)
 
 # set value
@@ -34,7 +34,7 @@ def load(stack):
         print('Invalid format: config should be a json file with keys and values of type string.')
     db.set(stack, vars)
 
-# unload to stdout
-def unload(stack):
+# dump to stdout
+def dump(stack):
     vars = db.get(stack)
     return print(json.dumps(vars, indent=2))
