@@ -6,18 +6,18 @@ from postal.core.rpc import Proxy
 help = 'Login to the postal build and management server'
 
 def arguments(parser):
-    pass
-    # parser.add_argument('-a', '--address', type=str, default='localhost', help='postal server address or host')
-    # parser.add_argument('-p', '--port', type=str, default='8000', help='postal server port')
+    parser.add_argument('-u', '--user', type=str, default='', help='postal server user')
+    parser.add_argument('-a', '--address', type=str, default='', help='postal server address or host')
+    parser.add_argument('-p', '--port', type=str, default='', help='postal server port')
 
 def main(args=None):
     # get input
     user = getpass.getuser()
     host = 'localhost'
     port = '22'
-    user = input(f'Enter postal build server user (default {user}): ').strip() or user
-    host = input(f'Enter postal build server host (default {host}): ').strip() or host
-    port = input(f'Enter postal build server port (default {port}): ').strip() or port
+    user = args.user or input(f'Enter postal build server user (default {user}): ').strip() or user
+    host = args.address or input(f'Enter postal build server host (default {host}): ').strip() or host
+    port = args.port or input(f'Enter postal build server port (default {port}): ').strip() or port
 
     # test connection
     print(f'Connnecting to {user}@{host}:{port}')
