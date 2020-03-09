@@ -37,6 +37,7 @@ def main():
     # management commands
     commands.register(subparsers, 'login', commands.login)
     commands.register(subparsers, 'call', commands.call)
+    commands.register(subparsers, 'version', commands.version)
 
     # special fixes for compose and deploy proxy commands
     arguments = sys.argv[1:]

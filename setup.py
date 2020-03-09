@@ -1,9 +1,8 @@
 import setuptools
+from postal.version import version
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-
-version = "0.0.3"
 
 setuptools.setup(
     # info

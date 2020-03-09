@@ -6,6 +6,7 @@ from . import deploy
 from . import login
 from . import call
 from . import swarm
+from . import version
 
 
 def register(subparsers, name, command, help=None):
