@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  postal:
+    image: postal:latest
+    hostname: postal
+    env_file: production.env
+    ports:
+      - "5020:22"
