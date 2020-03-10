@@ -5,6 +5,7 @@ from . import settings
 from .utils import shell
 from . import config
 from . import swarm
+from subprocess import CalledProcessError
 
 
 # functions registered for rpc
@@ -23,7 +24,7 @@ registered = {
 # execute rpc locally (we use temporary files to allow stdin stdout and return values)
 def call(cid):
     with open(f'/tmp/{cid}', 'r') as f: request = json.load(f)
-    with open(f'/tmp/{cid}', 'w') as f: f.write('')
+    shell(f'rm -f /tmp/{cid}')
     response = registered[request['function']](*request['args'], **request['kwargs'])
     with open(f'/tmp/{cid}', 'w') as f: json.dump(response, f)
 
@@ -54,10 +55,14 @@ class Proxy:
     def rpc(self, request):
         call_id = f'postal_{uuid.uuid1()}'
         ssh = f'ssh {self.user}@{self.host} -p {self.port}'
-        shell(f"{ssh} 'echo {json.dumps(request)} > /tmp/{call_id}'")
-        shell(f"{ssh} 'postal call {call_id}'")
-        response = shell(f" cat /tmp/{call_id}; rm /tmp/{call_id} 2> /dev/null", capture=True)
-        return json.loads(response)
+        try:
+            assert shell(f"{ssh} 'echo {json.dumps(request)} > /tmp/{call_id}'")
+            assert shell(f"{ssh} 'postal call {call_id}'")
+            response = shell(f"{ssh} 'cat /tmp/{call_id}'", capture=True)
+            assert shell(f"{ssh} 'rm /tmp/{call_id}'")
+            return json.loads(response)
+        except (AssertionError, CalledProcessError):
+            raise Exception('Remote procedure call error.')
 
     # proxy remote function calls for all undefined calls to dot operator eg: client.function_name
     def __getattr__(self, function):

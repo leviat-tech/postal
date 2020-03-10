@@ -7,10 +7,12 @@ from subprocess import call, check_output
 def shell(command, silent=False, capture=False):
     if silent:
         with open(os.devnull, 'w') as DEVNULL:
+            if capture:
+                return check_output(command, shell=True, stderr=DEVNULL)
             return call(command, shell=True, stdout=DEVNULL, stderr=DEVNULL) == 0
-    if capture:
-        return check_output(command, shell=True)
     else:
+        if capture:
+            return check_output(command, shell=True)
         return call(command, shell=True) == 0
 
 def sanitized_working_directory():
