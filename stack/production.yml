@@ -2,8 +2,11 @@ version: '3'
 
 services:
   postal:
-    image: postal:latest
+    image: crhio/postal:latest
     hostname: postal
     env_file: production.env
+    volumes:
+      - ~/.postal:/root/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "5020:22"
