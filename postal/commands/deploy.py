@@ -19,5 +19,5 @@ def main(args=None):
     if args.working:
         destination = proxy.send(os.getcwd())
         proxy.swarm_deploy(stack=args.stack, dir=destination)
-    # else:
-    #     proxy.swarm_deploy(destination)
+    else:
+        raise Exception("Deploying from github is not yet implemented.")
