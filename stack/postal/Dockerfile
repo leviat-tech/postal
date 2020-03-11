@@ -39,6 +39,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-c
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
 
 # create authorized keys file
 RUN mkdir -p /root/.ssh && touch /root/.ssh/authorized_keys
@@ -53,4 +54,5 @@ RUN ln -s /usr/bin/pip3 /usr/bin/pip
 COPY ./ /postal
 WORKDIR /postal
 RUN pip install -e /postal
-CMD ["/usr/sbin/sshd", "-D"]
+COPY stack/postal/serve.sh serve.sh
+CMD ["bash", "serve.sh"]
