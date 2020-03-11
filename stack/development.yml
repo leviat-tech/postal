@@ -1,4 +1,8 @@
 version: '3'
+
+volumes:
+  keys:
+
 services:
 
   dev:
@@ -6,7 +10,17 @@ services:
       context: ../
       dockerfile: stack/dev/Dockerfile
     hostname: dev
+    volumes:
+      - keys:/root/.ssh
+      - ../:/postal
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postal:
+    build:
+      context: ../
+      dockerfile: stack/postal/Dockerfile
+    hostname: postal
     env_file: development.env
     volumes:
-      - ../:/postal
+      - keys:/root/.ssh
       - /var/run/docker.sock:/var/run/docker.sock
