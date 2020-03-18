@@ -6,7 +6,7 @@ services:
     hostname: postal
     env_file: production.env
     volumes:
-      - ~/.postal:/root/.ssh
+      - /data/postal:/root/.ssh
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "5020:22"
