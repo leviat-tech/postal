@@ -44,7 +44,7 @@ class Proxy:
     def send(self, source):
         destination = f'/tmp/postal_stack_{uuid.uuid1()}'
         print('Uploading stack...', end=' ')
-        if shell(f"scp -P {self.port} -r {source} {self.user}@{self.host}:{destination}"):
+        if shell(f'rsync -a --info=progress2 -e "ssh -p {self.port}" {source}/* {self.user}@{self.host}:{destination}'):
             print('Done.')
         else:
             print('Failed')
