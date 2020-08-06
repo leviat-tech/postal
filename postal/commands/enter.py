@@ -3,7 +3,7 @@ import getpass
 from postal.core.utils import shell
 
 
-help = "Enter a container (using enter script if availiable./)"
+help = "Enter a container (using enter script if availiable.)"
 
 def arguments(parser):
     parser.add_argument('container', type=str, help='container to enter')
