@@ -108,6 +108,23 @@ Login from the client:
 postal login -u root -a yourdomain -p 5020
 ```
 
+# Connecting and Deploying
+After you have deployed the postal service check that your public key has been added (instructions below) so
+you have permission to connect.
+
+1. Login to the postal service using `postal login`.  
+2. Double check that you have connected by running a swarm command like `postal swarm ps`.  
+3. Enter project directory that you want to deploy.  
+4. Configure project environment variables: `postal config ls` and `postal config set` etc.
+5. Create a `production.yml` file in the stack with `env_file: production.env` if you want the
+   project's production configuration injected.
+6. Make sure the ports you have selected in `production.yml` aren't going to clash with an
+   existing service.
+7. Deploy working directory using `postal swarm deploy -w`.  
+8. Check the status of your service using `postal swarm service ls`
+9. Debug services that fail to replicate using `docker service ps --no-trunc your_service_name_here`
+10. Your service should be accessible via any node on the swarm if you used the swarms overlay network.
+
 # Todo
 * Don't use disk backed temp files for RPC input / output
 * Deploy from git origin
