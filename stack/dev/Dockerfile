@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:focal
 
 # install dev tools
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -8,7 +8,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     nano \
     sudo \
     python3 \
-    python3-pip
+    python3-pip \
+    python-is-python3
 
 # add docker apt repository
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -40,13 +41,16 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-
 RUN mkdir /var/run/sshd
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
-# tell python not to write bytecode and simlink python3 to python
-ENV PYTHONDONTWRITEBYTECODE 1
-RUN ln -s /usr/bin/python3 /usr/bin/python
-RUN ln -s /usr/bin/pip3 /usr/bin/pip
+# setup user bash environment
+RUN echo TERM=xterm-color >> /etc/environment
+RUN echo PYTHONDONTWRITEBYTECODE=1 >> /etc/environment
+
+# install poetry
+RUN pip3 install poetry
 
 # copy enter script and run
-COPY stack/dev/enter.sh /enter.sh
 WORKDIR /postal
+COPY stack/dev/enter.sh /enter.sh
+
 #CMD tail -f /dev/null
 CMD ["/usr/sbin/sshd", "-D"]

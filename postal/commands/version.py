@@ -1,10 +1,12 @@
-from postal.core.rpc import Proxy
-from postal.version import version
+try:
+    from importlib import metadata
+except ImportError: # for Python<3.8
+    import importlib_metadata as metadata
 
-help = "Proxy a docker command to swarm manager"
+help = "Show current postal version"
 
 def arguments(parser):
     pass
 
 def main(args=None):
-    print(version)
+    print(metadata.version('docker-postal'))
