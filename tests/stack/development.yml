@@ -1,9 +1,0 @@
-version: '3'
-services:
-
-  dev:
-    build:
-      context: ../
-      dockerfile: stack/dev/Dockerfile
-    env_file: development.env
-    hostname: dev
