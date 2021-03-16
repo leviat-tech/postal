@@ -20,6 +20,7 @@ postal = 'postal.cli:main'
 python = "^3.6"
 appdirs = "^1.4.4"
 boto = "^2.49.0"
+importlib-metadata = "^3.7.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
