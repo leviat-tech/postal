@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "docker-postal"
-version = "0.0.12"
+version = "0.0.13"
 description = "A light Docker control tool designed around compose and swarm"
 license = "MIT"
 authors = ["Stephen"]
