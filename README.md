@@ -2,11 +2,15 @@
 
 to start server (requires python ^3.8 and [poetry](https://python-poetry.org/)):
 
+`poetry run python3 src/python/server.py`
+
+to start proxy server (requires node and [npm](https://www.npmjs.com/)):
+
 ```
-export FLASK_APP=postal_experiment/hello.py
-poetry run flask run
+npm install
+node src/js/proxy.js
 ```
 
-in another terminal window:
+to run an interactive command:
 
-`curl -X POST http://127.0.0.1:5000/hello`
+`poetry run python3 src/python/client.py -i nano`

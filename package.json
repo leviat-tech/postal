@@ -1,0 +1,26 @@
+{
+  "name": "postal",
+  "version": "1.0.0",
+  "description": "to start server (requires python ^3.8 and [poetry](https://python-poetry.org/)):",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leviat-tech/postal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leviat-tech/postal/issues"
+  },
+  "homepage": "https://github.com/leviat-tech/postal#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.6"
+  }
+}
