@@ -6,9 +6,9 @@ import shlex
 import argparse
 from quart import Quart, request, websocket
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument("-p", "--port", help="port number to listen on", type=int, default=5000)
-# args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--port", help="port number to listen on", type=int, default=5000)
+args = parser.parse_args()
 
 app = Quart(__name__)
 
@@ -68,6 +68,5 @@ async def ws(id):
         awaitables.cancel()
     
 if __name__ == "__main__":
-    app.run()
-    # app.run(port=args.port)
+    app.run(port=args.port)
 

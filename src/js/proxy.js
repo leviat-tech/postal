@@ -5,8 +5,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const httpProxy = createProxyMiddleware(['/run', '/interactive'], {
   target: 'http://doesnt.matter:5000',
   router: function(req) {
-    const port = req.body.port;
     console.log(req.body);
+    const port = req.body.port;
     return `http://localhost:${port}`; // find node based on request
   },
   changeOrigin: true,
@@ -15,7 +15,7 @@ const httpProxy = createProxyMiddleware(['/run', '/interactive'], {
 const wsProxy = createProxyMiddleware('/ws', {
   target: 'ws://doesnt.matter:5000',
   router: function(req) {
-    const port = req.query.port;
+    const port = req.body.port;
     return `ws://localhost:${port}`;
   },
   changeOrigin: true,
@@ -23,9 +23,10 @@ const wsProxy = createProxyMiddleware('/ws', {
 });
 
 const app = express();
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(httpProxy);
 app.use(wsProxy);
+
 
 const server = app.listen(8080);
 server.on('upgrade', wsProxy.upgrade);
