@@ -4,11 +4,12 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("command", help="command to run", type=str)
+parser.add_argument("-p", "--port", help="port to send request to", type=int, required=True)
 parser.add_argument("-i", "--interactive", help="start an interactive process", action="store_true")
 args = parser.parse_args()
 
 if not args.interactive:
-    r = requests.post('http://localhost:8080/run', {'command': args.command})
+    r = requests.post('http://localhost:8080/run', {'command': args.command, 'port': args.port})
     print(r.text)
     sys.exit()
 
@@ -39,10 +40,10 @@ async def receiving(websocket, writer):
         writer.write(bytearray(message, 'utf-8'))
         await writer.drain()
 
-response = requests.post('http://localhost:8080/interactive', {'command': args.command})
+response = requests.post('http://localhost:8080/interactive', {'command': args.command, 'port': args.port})
 
-async def interactive_process(id):
-    uri = "ws://localhost:8080/ws/" + id
+async def interactive_process(process_id):
+    uri = "ws://localhost:8080/ws/" + process_id + '?port=' + str(args.port)
     reader, writer = await connect_stdin_stdout()
     try:
         async with websockets.connect(uri) as websocket:
