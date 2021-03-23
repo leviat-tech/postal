@@ -1,6 +1,7 @@
 import argparse
 import requests
 import sys
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument("command", help="command to run", type=str)
@@ -8,8 +9,11 @@ parser.add_argument("-p", "--port", help="port to send request to", type=int, re
 parser.add_argument("-i", "--interactive", help="start an interactive process", action="store_true")
 args = parser.parse_args()
 
+data = json.dumps({'command': args.command, 'port': args.port})
+headers = {'content-type': 'application/json'}
+
 if not args.interactive:
-    r = requests.post('http://localhost:8080/run', {'command': args.command, 'port': args.port})
+    r = requests.post('http://localhost:8080/run', data=data, headers=headers)
     print(r.text)
     sys.exit()
 
@@ -40,7 +44,7 @@ async def receiving(websocket, writer):
         writer.write(bytearray(message, 'utf-8'))
         await writer.drain()
 
-response = requests.post('http://localhost:8080/interactive', {'command': args.command, 'port': args.port})
+response = requests.post('http://localhost:8080/interactive', data=data, headers=headers)
 
 async def interactive_process(process_id):
     uri = "ws://localhost:8080/ws/" + process_id + '?port=' + str(args.port)

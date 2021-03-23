@@ -6,9 +6,9 @@ import shlex
 import argparse
 from quart import Quart, request, websocket
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--port", help="port number to listen on", type=int, default=5000)
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument("-p", "--port", help="port number to listen on", type=int, default=5000)
+# args = parser.parse_args()
 
 app = Quart(__name__)
 
@@ -16,7 +16,8 @@ coroutines = {}
 
 @app.route('/run', methods=['POST'])
 async def run():
-    cmd = (await request.form)['command']
+    print('hi')
+    cmd = (await request.get_json())['command']
     result = subprocess.run(
         shlex.split(cmd),
         capture_output=True,
@@ -31,7 +32,7 @@ async def run():
 @app.route('/interactive', methods=['POST'])
 async def interactive():
     id = str(uuid.uuid4())
-    cmd = (await request.form)['command']
+    cmd = (await request.get_json())['command']
     coroutines[id] = asyncio.create_subprocess_exec(*shlex.split(cmd), stdin=PIPE, stdout=PIPE, stderr=STDOUT)
     return id, 200
 
@@ -67,5 +68,6 @@ async def ws(id):
         awaitables.cancel()
     
 if __name__ == "__main__":
-    app.run(port=args.port)
+    app.run()
+    # app.run(port=args.port)
 

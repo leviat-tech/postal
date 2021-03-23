@@ -4,11 +4,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const httpProxy = createProxyMiddleware(['/run', '/interactive'], {
   target: 'http://doesnt.matter:5000',
-  router: (req) => 'http://localhost:6000',
-  // function(req) {
-  //   const port = req.body.port;
-  //   return `http://localhost:${port}`; // find node based on request
-  // },
+  router: function(req) {
+    const port = req.body.port;
+    console.log(req.body);
+    return `http://localhost:${port}`; // find node based on request
+  },
   changeOrigin: true,
 });
 
@@ -23,7 +23,7 @@ const wsProxy = createProxyMiddleware('/ws', {
 });
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(httpProxy);
 app.use(wsProxy);
 
